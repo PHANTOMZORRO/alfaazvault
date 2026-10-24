@@ -1,0 +1,67 @@
+// Prisma schema for AlfaazVault
+// Written for SQLite in local development, easily switchable to PostgreSQL by updating provider & DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  walletAddress String     @unique
+  createdAt     DateTime   @default(now())
+  listings      Listing[]  @relation("UserListings")
+  purchases     Purchase[] @relation("UserPurchases")
+}
+
+model Listing {
+  id             String     @id @default(cuid())
+  chainListingId Int
+  authorWallet   String
+  title          String
+  description    String
+  category       String     // Story, Article, Poetry, Shayari, Essay, Other
+  priceWei       String
+  fullText       String
+  contentHash    String
+  createdTxHash  String
+  active         Boolean    @default(true)
+  isDemo         Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  author         User?      @relation("UserListings", fields: [authorWallet], references: [walletAddress], onDelete: Cascade)
+  purchases      Purchase[]
+
+  @@index([authorWallet])
+  @@index([chainListingId])
+  @@index([category])
+}
+
+model Purchase {
+  id             String   @id @default(cuid())
+  listingId      String
+  buyerWallet    String
+  txHash         String   @unique
+  amountWei      String
+  blockTimestamp BigInt
+  createdAt      DateTime @default(now())
+
+  listing        Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyer          User?    @relation("UserPurchases", fields: [buyerWallet], references: [walletAddress], onDelete: Cascade)
+
+  @@index([buyerWallet])
+  @@index([listingId])
+}
+
+model Nonce {
+  id            String   @id @default(cuid())
+  walletAddress String   @unique
+  nonce         String
+  expiresAt     DateTime
+  createdAt     DateTime @default(now())
+}

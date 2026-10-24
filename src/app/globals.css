@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-vault-bg: #FFFFFF;
+  --color-vault-soft: #F0F9FF;
+  --color-vault-card-tint: #E0F2FE;
+  --color-vault-border: #BAE6FD;
+  --color-vault-accent: #38BDF8;
+  --color-vault-primary: #0369A1;
+  --color-vault-primary-hover: #075985;
+  --color-vault-text: #0C2A3F;
+  --color-vault-muted: #475569;
+  --color-vault-success: #0F9D58;
+  --color-vault-error: #D93025;
+}
+
+/* Light theme only, no dark mode */
+body {
+  background-color: #FFFFFF;
+  color: #0C2A3F;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid #38BDF8;
+  outline-offset: 2px;
+}
+
+/* Reading font styles */
+.font-reading {
+  font-family: var(--font-lora), 'Noto Sans Devanagari', 'Noto Nastaliq Urdu', Georgia, serif;
+}
+
+/* RTL Urdu script support */
+.font-urdu {
+  font-family: 'Noto Nastaliq Urdu', Georgia, serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.2 !important;
+}
+
+.font-devanagari {
+  font-family: 'Noto Sans Devanagari', system-ui, sans-serif;
+}
+
+/* Custom scrollbars in sky-blue tint */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F9FF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #BAE6FD;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #38BDF8;
+}
